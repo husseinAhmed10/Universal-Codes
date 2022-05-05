@@ -4,7 +4,8 @@ clc
 clear
 
 % input string
-str = 'ABC';
+%s1 = 'ABBCA';
+str = 'ABCABACBABCCACBAABBCCABAABB';
 fprintf('The entered string is : %s\n', str);
   
 % length of the string
@@ -76,15 +77,15 @@ for i = 1 : len
            stage(length(stage))=high;
            for i = 2: length(stage)-1
 
-               if stage(i-1)==stage(i)
-                  
-                    stage(i)= stage(i-1) + p_sep(i-1)*(high - low)*2;
-                   
-               else
+%                if stage(i-1)==stage(i)
+%                   
+%                     stage(i)= stage(i-1) + p_sep(i-1)*(high - low)*2;
+%                    
+%                else
                
                 stage(i)= stage(i-1)+p_sep(i-1)*(high - low);
     
-               end
+              % end
            end
   
            display(pos);
@@ -109,15 +110,18 @@ display(tag);
 
 low = 0;
 high = 1;
-middle = 0.5;
+%middle = 0.5;
 stage = zeros(1, len_unique + 1);   %table
 stage(1)=low;
 stage(length(stage))=high;
+
 for i = 2: length(stage)-1
 
     stage(i)= stage(i-1)+p(i);
     
 end
+
+u = sort(u);
 prev_observation = zeros(1, len_unique);
 p_sep = zeros(1, len_unique);
 
@@ -149,15 +153,15 @@ for i = 1 : len
            stage(length(stage))=high;
            for i = 2: length(stage)-1
 
-                if stage(i-1)==stage(i)
-                  
-                    stage(i)= stage(i-1) + p_sep(i-1)*(high - low)*2;
-                   
-               else
+%                 if stage(i-1)==stage(i)
+%                   
+%                     stage(i)= stage(i-1) + p_sep(i-1)*(high - low)*2;
+%                    
+%                else
                
                 stage(i)= stage(i-1)+p_sep(i-1)*(high - low);
     
-               end
+            %   end
     
            end
   
