@@ -5,7 +5,9 @@ clear
 
 % input string
 %s1 = 'ABBCA';
-str = 'ABCABACBABCCACBAABBCCABAABB';
+%s2 = 'ABCABACBABCCACBAABBCCABAABB';
+str = 'If Peter Piper picked a peck of pickled peppers, where is the peck of pickled peppers Peter Piper picked?';
+
 fprintf('The entered string is : %s\n', str);
   
 % length of the string
