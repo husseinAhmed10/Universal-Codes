@@ -6,8 +6,8 @@ clear
 % input string
 %s1 = 'ABBCA';
 %s2 = 'ABCABACBABCCACBAABBCCABAABB';
-str = 'If Peter Piper picked a peck of pickled peppers, where is the peck of pickled peppers Peter Piper picked?';
-
+%str = 'If Peter Piper picked a peck of pickled peppers, where is the peck of pickled peppers Peter Piper picked?';
+str = ' aly amer';
 fprintf('The entered string is : %s\n', str);
   
 % length of the string
@@ -77,7 +77,7 @@ for i = 1 : len
            
            stage(1)=low;
            stage(length(stage))=high;
-           for i = 2: length(stage)-1
+           for ind = 2: length(stage)-1
 
 %                if stage(i-1)==stage(i)
 %                   
@@ -85,12 +85,13 @@ for i = 1 : len
 %                    
 %                else
                
-                stage(i)= stage(i-1)+p_sep(i-1)*(high - low);
+                stage(ind)= stage(ind-1)+p_sep(ind-1)*(high - low);
     
               % end
            end
   
            display(pos);
+           disp(u(j));
   
 
          
@@ -148,12 +149,16 @@ for i = 1 : len
            
            pos = j;
            
+           
+           display(pos);
+           disp(u(j));
+           
            low = stage(j);
            high = stage(j+1);
            
            stage(1)=low;
            stage(length(stage))=high;
-           for i = 2: length(stage)-1
+           for ind = 2: length(stage)-1
 
 %                 if stage(i-1)==stage(i)
 %                   
@@ -161,7 +166,7 @@ for i = 1 : len
 %                    
 %                else
                
-                stage(i)= stage(i-1)+p_sep(i-1)*(high - low);
+                stage(ind)= stage(ind-1)+p_sep(ind-1)*(high - low);
     
             %   end
     
@@ -170,13 +175,24 @@ for i = 1 : len
            % Geeting the matched tag 
            % value character
            decoded_str = u(pos);
+           
+           %if decoded_str == ' '
+                str = [str decoded_str];
+               % break;
+           %else
+           %    str = strcat(str, decoded_str);
+          % end
+           
+           disp(decoded_str);
   
            % String concatenating 
            % 'decoded_str' into 'str'
-           str = strcat(str, decoded_str);
+           %str = strcat(str, decoded_str);
            break
        end
    end
+   
+   
 end
   
 % Displaying final decoded string
