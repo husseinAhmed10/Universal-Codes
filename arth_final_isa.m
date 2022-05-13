@@ -7,7 +7,7 @@ clear
 %s1 = 'ABBCA';
 %s2 = 'ABCABACBABCCACBAABBCCABAABB';
 %str = 'If Peter Piper picked a peck of pickled peppers, where is the peck of pickled peppers Peter Piper picked?';
-str = ' aly amer';
+str = 'aly amer hassan';
 fprintf('The entered string is : %s\n', str);
   
 % length of the string
@@ -101,15 +101,57 @@ for i = 1 : len
 end
   
 % displaying tag value
-l_of_bin = ceil(1/(high-low))+1;
-tag = (low + high)/2;
-display(tag);
-%tag = 01100000000000;
-%disp(tag);
+l_of_bin = ceil(log2(1/(high-low)))+1;
 
+tag = (low + high)/2;
+
+
+     a = fi(tag,1,l_of_bin,l_of_bin);
+     y = a.bin;
+     
+encoded_str = num2str(y);
+
+%         for i=1:l_of_bin
+%             
+%             tag = tag * 2;
+%             
+%             if tag < 1
+%                 encoded_str = [encoded_str '0'];
+%             else
+%                 encoded_str = [encoded_str '1'];
+%                 tag = tag - 1;
+%             end
+%             
+%             
+%         end
+
+        %
+        
 
 
 %%decoding
+decoded_str=0;
+encoded_str = convertStringsToChars(string(encoded_str));
+
+tester = encoded_str;
+tester = convertStringsToChars(tester);
+Output=char(num2cell(tester));
+Output=reshape(str2num(Output),1,[]) ;
+decoded_str = Output*2.^(-1:-1:-length(Output)).' ;
+tag = decoded_str;
+
+% x = "1100";
+% string="1100" ;
+% y=convertStringsToChars(x) ;
+% A=y;
+% Output=char(num2cell(A));
+% Output=reshape(str2num(Output),1,[]) ;
+% Output*2.^(-1:-1:-length(Output)).' ;
+
+
+
+
+
 
 low = 0;
 high = 1;
@@ -205,3 +247,4 @@ disp(str)
 %     y = a.bin;
 %     
 % end
+
