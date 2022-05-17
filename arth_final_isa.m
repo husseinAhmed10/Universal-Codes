@@ -6,8 +6,10 @@ clear
 % input string
 %s1 = 'ABBCA';
 %s2 = 'ABCABACBABCCACBAABBCCABAABB';
-%str = 'If Peter Piper picked a peck of pickled peppers, where is the peck of pickled peppers Peter Piper picked?';
-str = 'aly amer hassan';
+str = 'If Peter P';%iper picked a peck of pickled peppers, where is the peck of pickled peppers Peter Piper picked?';
+%str = 'Haly amer hassa';
+%str = 'AABABBBAAABAABBBABAB';
+%str='ABBCA';
 fprintf('The entered string is : %s\n', str);
   
 % length of the string
@@ -57,6 +59,11 @@ u = sort(u);
 prev_observation = zeros(1, len_unique);
 p_sep = zeros(1, len_unique);
 %total_previous_observation_String=1;
+
+encoded_str='';
+
+if len <= 10 
+
 for i = 1 : len
    for j = 1 : len_unique
   
@@ -64,12 +71,9 @@ for i = 1 : len
        % matches with 'u' then
        if str(i) == u(j)
            prev_observation(j)=prev_observation(j) + 1;
-           %if i ~= 1
               for k = 1 : len_unique 
                 p_sep(k)=(1+prev_observation(k))/(i+len_unique);
               end
-           %end
-           %total_previous_observation_String = total_previous_observation_String + 1;
            pos = j;
            
            low = stage(j);
@@ -78,16 +82,9 @@ for i = 1 : len
            stage(1)=low;
            stage(length(stage))=high;
            for ind = 2: length(stage)-1
-
-%                if stage(i-1)==stage(i)
-%                   
-%                     stage(i)= stage(i-1) + p_sep(i-1)*(high - low)*2;
-%                    
-%                else
                
                 stage(ind)= stage(ind-1)+p_sep(ind-1)*(high - low);
     
-              % end
            end
   
            display(pos);
@@ -99,39 +96,134 @@ for i = 1 : len
        end
    end
 end
-  
+
 % displaying tag value
+
+
+else
+
+    pointer=0;
+    pointervalue = 0;
+    for i = 1 : len
+        if (rem((i-1),10)==0 && i~=1)
+            pointer =1;
+            pointervalue = pointervalue + 1;
+            l_of_bin = ceil(log2(1/(high-low)))+1;
+
+            tag = (low + high)/2;
+
+        for i_encode=1:l_of_bin
+            
+            tag = tag * 2;
+            
+            if tag < 1
+                encoded_str = [encoded_str '0'];
+            else
+                encoded_str = [encoded_str '1'];
+                tag = tag - 1;
+            end
+            
+            
+        end
+        
+        
+        low = 0;
+high = 1;
+%middle = 0.5;
+stage = zeros(1, len_unique + 1);   %table
+stage(1)=low;
+stage(length(stage))=high;
+
+for i_new = 2: length(stage)-1
+
+    stage(i_new)= stage(i_new-1)+p(i_new);
+    
+end
+
+u = sort(u);
+prev_observation = zeros(1, len_unique);
+p_sep = zeros(1, len_unique);
+            
+        end
+        
+    
+   for j = 1 : len_unique
+  
+       
+       if str(i) == u(j)
+           prev_observation(j)=prev_observation(j) + 1;
+              for k = 1 : len_unique 
+                  if pointer == 0
+                      p_sep(k)=(1+prev_observation(k))/(i+len_unique);
+                  else
+                      p_sep(k)=(1+prev_observation(k))/((i-(10*pointervalue))+len_unique);
+                  end
+              end
+           pos = j;
+           
+           low = stage(j);
+           high = stage(j+1);
+           
+           stage(1)=low;
+           stage(length(stage))=high;
+           for ind = 2: length(stage)-1
+               
+                stage(ind)= stage(ind-1)+p_sep(ind-1)*(high - low);
+    
+           end
+  
+           display(pos);
+           disp(u(j));
+  
+
+         
+           break
+       end
+   end
+   
+   
+   
+    end
+end
+                    
+
+
 l_of_bin = ceil(log2(1/(high-low)))+1;
 
-tag = (low + high)/2;
+            tag = (low + high)/2;
+
+        for i=1:l_of_bin
+            
+            tag = tag * 2;
+            
+            if tag < 1
+                encoded_str = [encoded_str '0'];
+            else
+                encoded_str = [encoded_str '1'];
+                tag = tag - 1;
+            end
+            
+            
+        end
+  
 
 
-     a = fi(tag,1,l_of_bin,l_of_bin);
-     y = a.bin;
+   encoded_str = num2str(encoded_str);    
+   
+   
+   
+ %    a = fi(tag,1,l_of_bin,l_of_bin);
+ %    y = a.bin;
      
-encoded_str = num2str(y);
-
-%         for i=1:l_of_bin
-%             
-%             tag = tag * 2;
-%             
-%             if tag < 1
-%                 encoded_str = [encoded_str '0'];
-%             else
-%                 encoded_str = [encoded_str '1'];
-%                 tag = tag - 1;
-%             end
-%             
-%             
-%         end
-
-        %
+%encoded_str = num2str(y);
         
 
 
 %%decoding
 decoded_str=0;
-encoded_str = convertStringsToChars(string(encoded_str));
+%encoded_str = convertStringsToChars(string(encoded_str));
+encoded_str = convertStringsToChars(string('0010110010000000110010001101110010011001'));
+
 
 tester = encoded_str;
 tester = convertStringsToChars(tester);
@@ -140,6 +232,7 @@ Output=reshape(str2num(Output),1,[]) ;
 decoded_str = Output*2.^(-1:-1:-length(Output)).' ;
 tag = decoded_str;
 
+%tag = (low + high)/2;
 % x = "1100";
 % string="1100" ;
 % y=convertStringsToChars(x) ;
@@ -172,7 +265,9 @@ p_sep = zeros(1, len_unique);
 
 
 str = '';
-  
+
+if encoded_str <= 33
+
 for i = 1 : len
    for j = 1 : len_unique
        
@@ -235,6 +330,11 @@ for i = 1 : len
    end
    
    
+end
+
+else
+    
+    
 end
   
 % Displaying final decoded string
