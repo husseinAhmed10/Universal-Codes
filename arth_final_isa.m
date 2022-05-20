@@ -6,18 +6,20 @@ clear
 % input string
 %s1 = 'ABBCA';
 %s2 = 'ABCABACBABCCACBAABBCCABAABB';
-str = 'If Peter P';%iper picked a peck of pickled peppers, where is the peck of pickled peppers Peter Piper picked?';
+str = 'cked?';%here is the peck of pickled peppers Peter Piper picked?';
 %str = 'Haly amer hassa';
 %str = 'AABABBBAAABAABBBABAB';
 %str='ABBCA';
+
 fprintf('The entered string is : %s\n', str);
   
 % length of the string
+str=lower(str);
 len = length(str);
 fprintf('The length of the string is : %d\n', len);
   
 % get unique characters from the string
-u = unique(str);
+u = unique('abcdefghijklmnopqrstuvwxyz,? ');
 fprintf('The unique characters are : %s\n', u);
   
 % length of the unique characters string
@@ -222,7 +224,7 @@ l_of_bin = ceil(log2(1/(high-low)))+1;
 %%decoding
 decoded_str=0;
 %encoded_str = convertStringsToChars(string(encoded_str));
-encoded_str = convertStringsToChars(string('0010110010000000110010001101110010011001'));
+encoded_str = convertStringsToChars(string('0100101111110'));
 
 
 tester = encoded_str;
@@ -259,14 +261,14 @@ for i = 2: length(stage)-1
     
 end
 
-u = sort(u);
+u = sort('ab');
 prev_observation = zeros(1, len_unique);
 p_sep = zeros(1, len_unique);
 
 
 str = '';
 
-if encoded_str <= 33
+%if encoded_str <= 33
 
 for i = 1 : len
    for j = 1 : len_unique
@@ -332,10 +334,10 @@ for i = 1 : len
    
 end
 
-else
+%else
     
     
-end
+%end
   
 % Displaying final decoded string
 disp(str)
